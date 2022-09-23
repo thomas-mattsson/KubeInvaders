@@ -52,7 +52,8 @@ COPY scripts/config_kubeinv.lua /usr/local/openresty/lualib/config_kubeinv.lua
 COPY nginx/KubeInvaders.conf /etc/nginx/conf.d/KubeInvaders.conf
 RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx /var/www/html /etc/nginx/conf.d
 
-RUN chmod -R g=u /usr/local/openresty/nginx /etc/nginx /etc/redis
+RUN chown -R 0:0 /etc/redis && \
+    chmod -R g=u /usr/local/openresty/nginx /etc/nginx /etc/redis
 
 EXPOSE 8080
 
