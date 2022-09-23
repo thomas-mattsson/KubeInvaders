@@ -50,7 +50,7 @@ COPY scripts/chaos-node.lua /usr/local/openresty/nginx/conf/kubeinvaders/chaos-n
 COPY scripts/chaos-containers.lua /usr/local/openresty/nginx/conf/kubeinvaders/chaos-containers.lua
 COPY scripts/config_kubeinv.lua /usr/local/openresty/lualib/config_kubeinv.lua
 COPY nginx/KubeInvaders.conf /etc/nginx/conf.d/KubeInvaders.conf
-RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx /var/www/html /etc/nginx/conf.d/conf.d
+RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx /var/www/html /etc/nginx/conf.d
 
 RUN chmod -R g=u /usr/local/openresty/nginx /etc/nginx /etc/redis
 
