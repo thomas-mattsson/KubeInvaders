@@ -1,4 +1,4 @@
-FROM  nginx
+FROM nginx
 
 # Install kubectl
 RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -34,13 +34,13 @@ COPY html5/ /var/www/html
 
 # Install Redis
 RUN apt-get install redis -y
-COPY redis/redis.conf /etc/redis/redis.conf
+COPY --chown=0:0 redis/redis.conf /etc/redis/redis.conf
 
 # Configure Nginx
 RUN sed -i.bak 's/listen\(.*\)80;/listen 8081;/' /etc/nginx/conf.d/default.conf
 RUN mkdir /usr/local/openresty/nginx/conf/kubeinvaders
 
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --chown=0:0 nginx/nginx.conf /etc/nginx/nginx.conf
 
 COPY scripts/metrics.lua /usr/local/openresty/nginx/conf/kubeinvaders/metrics.lua
 COPY scripts/pod.lua /usr/local/openresty/nginx/conf/kubeinvaders/pod.lua
@@ -50,7 +50,9 @@ COPY scripts/chaos-node.lua /usr/local/openresty/nginx/conf/kubeinvaders/chaos-n
 COPY scripts/chaos-containers.lua /usr/local/openresty/nginx/conf/kubeinvaders/chaos-containers.lua
 COPY scripts/config_kubeinv.lua /usr/local/openresty/lualib/config_kubeinv.lua
 COPY nginx/KubeInvaders.conf /etc/nginx/conf.d/KubeInvaders.conf
-RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx /var/www/html /etc/nginx/conf.d
+RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx /var/www/html /etc/nginx/conf.d/conf.d
+
+RUN chmod -R g=u /usr/local/openresty/nginx /etc/nginx /etc/redis
 
 EXPOSE 8080
 
