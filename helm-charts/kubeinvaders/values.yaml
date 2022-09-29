@@ -47,7 +47,9 @@ deployment:
   resources: {}
   nodeSelector: {}
   tolerations: []
-  securityContext: {}
+  securityContext: {
+    runAsUser: 0
+  }
 
 service:
   type: ClusterIP
