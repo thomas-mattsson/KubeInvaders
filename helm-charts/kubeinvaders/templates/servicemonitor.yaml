@@ -8,6 +8,7 @@ metadata:
     helm.sh/chart: {{ include "kubeinvaders.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+    openshift.io/cluster-monitoring: 'true'
 spec:
   endpoints:
     - port: http
